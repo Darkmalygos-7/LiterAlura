@@ -49,6 +49,9 @@ public class Principal {
                 case 4:
                     listarAutoresVivosEnDeterminadoAno();
                     break;
+                case 5:
+                    listarLibrosPorIdioma();
+                    break;
                 case 0:
                     System.out.println("Cerrando Aplicación....");
                     break;
@@ -139,6 +142,25 @@ public class Principal {
             System.out.println("Año de Fallecimiento = "+a.getFechaDeFallecimiento());
             System.out.println("Libros:");
             a.getLibros().forEach(l -> System.out.println(" - "+l.getTitulo()));
+            System.out.println("===================================");
+        });
+    }
+
+    private void listarLibrosPorIdioma() {
+        Lenguajes lenguaje = Lenguajes.seleccionarLengua(teclado, "libro");
+        List<Libro> libros = repository.buscarLibrosPorIdioma(lenguaje);
+        if (libros.isEmpty()){
+            System.out.println("No se encontraron libros en el idioma seleccionado.");
+            return;
+        }
+        System.out.println("\n Libros en Idioma: "+lenguaje.getNOMBRE_COMPLETO());
+        libros.forEach(l -> {
+            System.out.println("Titulo = "+l.getTitulo());
+            System.out.println("Autores:");
+            l.getAutores().forEach(a -> System.out.println(" - "+ a.getNombre()));
+            System.out.println("Idiomas:");
+            l.getLenguajes().forEach(lang -> System.out.println(" - "+lang.getNOMBRE_COMPLETO()));
+            System.out.println("Cantidad de Descargas = "+ l.getNumeroDeDescargas());
             System.out.println("===================================");
         });
     }
