@@ -43,6 +43,9 @@ public class Principal {
                 case 2:
                     listarLibrosRegistrados();
                     break;
+                case 3:
+                    listarAutoresRegistrados();
+                    break;
                 case 0:
                     System.out.println("Cerrando Aplicación....");
                     break;
@@ -92,12 +95,28 @@ public class Principal {
             return;
         }
         libros.forEach(l -> {
-            System.out.println("Titulo ="+l.getTitulo());
+            System.out.println("Titulo = "+l.getTitulo());
             System.out.println("Autores:");
             l.getAutores().forEach(a -> System.out.println(" - "+ a.getNombre()));
             System.out.println("Idiomas:");
             l.getLenguajes().forEach(lang -> System.out.println(" - "+lang.getNOMBRE_COMPLETO()));
             System.out.println("Cantidad de Descargas = "+ l.getNumeroDeDescargas());
+            System.out.println("===================================");
+        });
+    }
+
+    private void listarAutoresRegistrados() {
+        List<Autor> autores = autorRepository.buscarAutoresYSusLibros();
+        if (autores.isEmpty()){
+            System.out.println("No hay Autores Registrados");
+            return;
+        }
+        autores.forEach(a -> {
+            System.out.println("Autor ="+a.getNombre());
+            System.out.println("Año de Nacimiento = "+a.getFechaDeNacimiento());
+            System.out.println("Año de Fallecimiento = "+a.getFechaDeFallecimiento());
+            System.out.println("Libros:");
+            a.getLibros().forEach(l -> System.out.println(" - "+l.getTitulo()));
             System.out.println("===================================");
         });
     }
