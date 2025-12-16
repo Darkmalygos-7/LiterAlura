@@ -46,6 +46,9 @@ public class Principal {
                 case 3:
                     listarAutoresRegistrados();
                     break;
+                case 4:
+                    listarAutoresVivosEnDeterminadoAno();
+                    break;
                 case 0:
                     System.out.println("Cerrando Aplicación....");
                     break;
@@ -109,6 +112,25 @@ public class Principal {
         List<Autor> autores = autorRepository.buscarAutoresYSusLibros();
         if (autores.isEmpty()){
             System.out.println("No hay Autores Registrados");
+            return;
+        }
+        autores.forEach(a -> {
+            System.out.println("Autor ="+a.getNombre());
+            System.out.println("Año de Nacimiento = "+a.getFechaDeNacimiento());
+            System.out.println("Año de Fallecimiento = "+a.getFechaDeFallecimiento());
+            System.out.println("Libros:");
+            a.getLibros().forEach(l -> System.out.println(" - "+l.getTitulo()));
+            System.out.println("===================================");
+        });
+    }
+
+    private void listarAutoresVivosEnDeterminadoAno() {
+        System.out.println("Ingrese el año vivo de autor(es) que desea buscar");
+        int anio = teclado.nextInt();
+        List<Autor> autores = autorRepository.autoresVivosEnAnio(anio);
+        if (autores.isEmpty()){
+            System.out.println("No hay autores registrados que estuviesen vivos en "+ anio);
+            teclado.nextLine();
             return;
         }
         autores.forEach(a -> {
