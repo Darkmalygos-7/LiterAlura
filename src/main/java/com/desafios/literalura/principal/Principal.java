@@ -40,6 +40,9 @@ public class Principal {
                 case 1:
                     buscarLibroWeb();
                     break;
+                case 2:
+                    listarLibrosRegistrados();
+                    break;
                 case 0:
                     System.out.println("Cerrando Aplicación....");
                     break;
@@ -80,6 +83,23 @@ public class Principal {
         }
         libro.setAutores(new ArrayList<>(autores));
         repository.save(libro);
+    }
+
+    private void listarLibrosRegistrados() {
+        List<Libro> libros = repository.buscarTodosConAutoresYLenguajes();
+        if (libros.isEmpty()){
+            System.out.println("No hay Libros Registrados");
+            return;
+        }
+        libros.forEach(l -> {
+            System.out.println("Titulo ="+l.getTitulo());
+            System.out.println("Autores:");
+            l.getAutores().forEach(a -> System.out.println(" - "+ a.getNombre()));
+            System.out.println("Idiomas:");
+            l.getLenguajes().forEach(lang -> System.out.println(" - "+lang.getNOMBRE_COMPLETO()));
+            System.out.println("Cantidad de Descargas = "+ l.getNumeroDeDescargas());
+            System.out.println("===================================");
+        });
     }
 
 }
